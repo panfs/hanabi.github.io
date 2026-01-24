@@ -107,8 +107,6 @@ const COLORS_WITH_BLACK_TEXT: ReadonlySet<string> = new Set([
 ]);
 
 class ImageGenerator {
-  private readonly hanabiGameState: HanabiGameState;
-
   private readonly translations: TranslatableContent;
 
   private readonly piecesPath: string;
@@ -130,8 +128,6 @@ class ImageGenerator {
   private readonly svgFile: SVG;
 
   constructor(hanabiGameState: HanabiGameState, options: LoaderOptions) {
-    this.hanabiGameState = hanabiGameState;
-
     this.translations = options.translations;
 
     this.piecesPath = `${options.baseUrl}${PIECES_PATH}`;
@@ -595,7 +591,7 @@ class ImageGenerator {
     orange?: number,
   ) {
     const crossedOutSet = new Set(crossedOut);
-    const orangeSet = new Set(orange?.toString() ?? "");
+    const orangeSet = new Set(orange?.toString());
     const rankPipWidth = CARD_WIDTH / 5;
     for (let rank = 1; rank < 6; rank++) {
       if (pips.has(rank.toString())) {

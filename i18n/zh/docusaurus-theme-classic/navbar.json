@@ -8,19 +8,19 @@
     "description": "The alt text of navbar logo"
   },
   "item.label.Beginner": {
-    "message": "入\u2060门指\u2060南",
+    "message": "入⁠门指⁠南",
     "description": "Navbar item with label Beginner"
   },
   "item.label.Learning Path": {
-    "message": "学\u2060习阶\u2060梯",
+    "message": "学⁠习阶⁠梯",
     "description": "Navbar item with label Learning Path"
   },
   "item.label.Reference": {
-    "message": "参\u2060考文\u2060档",
+    "message": "参⁠考文⁠档",
     "description": "Navbar item with label Reference"
   },
   "item.label.Variant-Specific": {
-    "message": "变\u2060体特\u2060定",
+    "message": "变⁠体特⁠定",
     "description": "Navbar item with label Variant-Specific"
   }
 }

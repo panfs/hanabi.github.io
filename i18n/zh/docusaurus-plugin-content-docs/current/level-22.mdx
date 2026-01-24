@@ -88,3 +88,63 @@ import RebelliousDiscard from "./level-22/rebellious-discard.yml";
   - Thus, Bob knows that he must perform a _Rebellious Discard_ in order to provide a clue for Cathy to do something.
 
 <RebelliousDiscard />
+
+## 一般原则 \{#general-principles\}
+
+### 尖叫弃牌流程图 \{#a-scream-discard-flowchart\}
+
+以下是一张用于判断某次弃牌是*尖叫弃牌位移动*还是*生成弃牌*的流程图。
+
+```mermaid
+flowchart TD;
+
+S1("Alice 在有已知可打出的牌时弃牌。（或者，Alice 有已知可安全弃掉的牌却弃掉了弃牌位。）")
+S2("现在是紧急情况！")
+D1[/Bob 有已知可打出的牌或<br/>已知可安全弃掉的牌吗？\]
+D1Y([是])
+D1N([否])
+D2[/Cathy 有已知可打出的牌或<br/>已知可安全弃掉的牌吗？\]
+D2Y([是])
+D2N([否])
+D3[/Cathy 的弃牌位上是否是<br/>唯一的可打出牌、关键牌<br/>或唯一的 2？\]
+D3Y([是])
+D3N([否])
+D3YL(Alice 做出了***生成弃牌***。<br/ ><br/ >Bob 应该给 Cathy 的弃牌位一个*出牌提示*或*留牌提示*。)
+D3NL(Alice 做出了***尖叫弃牌位移动***。<br/ ><br/ >Bob 的弃牌位上有一张重要的牌，因此他应永久地将弃牌位*移动*一个位置。此外，他在这回合不允许弃牌。)
+D4[/Cathy 有已知可打出的牌或<br/>已知可安全弃掉的牌吗？\]
+D4Y([是])
+D4N([否])
+D4YL(Alice 做出了本流程图未涵盖的高级行动。<br/ ><br/ >*尖叫弃牌*和*生成弃牌***只能**是最后手段，所以 Bob 应该思考哪些牌需要保留以及哪些玩家的弃牌位最安全。也有可能 Alice 犯了一个错误。)
+D5[/Cathy 的弃牌位上是否是<br/>唯一的可打出牌、关键牌<br/>或唯一的 2？\]
+D5Y([是])
+D5N([否])
+D5YL("Alice 做出了***回声尖叫弃牌位移动***。<br/ ><br/ >Bob 和 Cathy 都应*移动弃牌位*。（Bob 不需要担心提示 Cathy。）")
+
+class D1Y,D2Y,D3Y,D4Y,D5Y node-yes
+class S2,D1N,D2N,D3N,D4N,D5N node-no
+class D1,D2,D3,D4,D5 node-dec
+class S1,D3NL,D3YL,D5YL,D4YL node-act
+
+S1 --> S2;
+S2 --> D1;
+D1 --> D1N;
+D1 --> D1Y;
+D1N --> D2;
+D2 --> D2Y;
+D2Y --> D3NL;
+D2 --> D2N;
+D2N --> D3;
+D3 --> D3Y;
+D3 --> D3N;
+D3Y --> D3YL;
+D3N --> D3NL;
+D1Y --> D4;
+D4 --> D4N;
+D4 --> D4Y;
+D4N --> D5;
+D5 --> D5Y;
+D5 --> D5N;
+D5Y --> D5YL;
+D5N --> D4YL;
+D4Y --> D4YL;
+```
