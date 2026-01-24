@@ -36,10 +36,6 @@ players:
       - type: 2
         trash: true
       - type: x
-        above:
-          text:
-            - 弃牌位
-            - 已移过
       - type: 2
         trash: true
       - type: x
