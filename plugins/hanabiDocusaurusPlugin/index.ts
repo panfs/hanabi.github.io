@@ -44,20 +44,25 @@ interface TranslatableContent {
     yellow: string;
     purple: string;
   };
-  Rainbow: {
-    text: string;
-    extraWidth: number;
-    decreaseOffset: number;
-  };
   bigText: {
     Bluff: string;
     Finesse: string;
     "Illegal!": string;
   };
+  Rainbow: {
+    text: string;
+    extraWidth: number;
+    decreaseOffset: number;
+  };
+  textExpansion: {
+    sp: string;
+    op: string;
+    cm: string;
+  };
 }
 
 function translateContentSubObject<
-  K extends "color" | "shortColor" | "bigText",
+  K extends "color" | "shortColor" | "bigText" | "textExpansion",
 >(
   key: K,
   content: TranslatableContent,
@@ -118,6 +123,11 @@ export default function hanabiDocusaurusPlugin(
           extraWidth: 21,
           decreaseOffset: 13,
         },
+        textExpansion: {
+          sp: "Save or\nPlay",
+          op: "Occupied\nPlay",
+          cm: "Chop\nMove",
+        },
       };
     },
 
@@ -156,6 +166,10 @@ export default function hanabiDocusaurusPlugin(
                   } as TranslationMessage,
                 ] as const,
             ),
+            ...Object.keys(content.bigText).map(
+              (k) =>
+                [`bigText.${k}`, { message: k } as TranslationMessage] as const,
+            ),
             [
               "Rainbow.text",
               {
@@ -179,10 +193,27 @@ export default function hanabiDocusaurusPlugin(
                   "Numerical decrease of offset of text boxes starting with Rainbow.text",
               } as const,
             ],
-            ...Object.keys(content.bigText).map(
-              (k) =>
-                [`bigText.${k}`, { message: k } as TranslationMessage] as const,
-            ),
+            [
+              "textExpansion.sp",
+              {
+                message: "Save or\nPlay",
+                description: "Shortcut for save or play",
+              } as const,
+            ],
+            [
+              "textExpansion.op",
+              {
+                message: "Occupied\nPlay",
+                description: "Shortcut for occupied play",
+              } as const,
+            ],
+            [
+              "textExpansion.cm",
+              {
+                message: "Chop\nMove",
+                description: "Shortcut for chop move",
+              } as const,
+            ],
           ]),
         },
       ];
@@ -216,6 +247,11 @@ export default function hanabiDocusaurusPlugin(
               translationFile?.content["Rainbow.decreaseOffset"]?.message,
             ) ?? content.Rainbow.decreaseOffset,
         },
+        textExpansion: translateContentSubObject(
+          "textExpansion",
+          content,
+          translationFile,
+        ),
       };
     },
 

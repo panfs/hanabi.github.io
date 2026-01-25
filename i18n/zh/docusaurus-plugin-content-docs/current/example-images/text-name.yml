@@ -13,3 +13,26 @@ players:
       - type: x
       - type: x
       - type: x
+  - name: "间距："
+    cards:
+      - type: x
+      - type: x
+      - type: x
+  - space: 5
+  - name: 小
+    cards:
+      - type: x
+      - type: x
+      - type: x
+  - space
+  - name: 默认
+    cards:
+      - type: x
+      - type: x
+      - type: x
+  - space: 100
+  - name: 大
+    cards:
+      - type: x
+      - type: x
+      - type: x

@@ -1,0 +1,70 @@
+players:
+  - name: Bob
+    cards:
+      - type: x
+        middleNote: (1)
+        below:
+          text:
+            - 起手
+          color: Gray
+      - type: b
+        above: 蓝 3
+        below: 打出
+      - type: x
+      - type: b
+        above: 蓝 4
+      - type: x
+  - name: Bob
+    cards:
+      - type: x
+        middleNote: (1)
+        below:
+          text: 新
+          color: Green
+      - type: x
+        middleNote: (1)
+        below:
+          text:
+            - 起手
+          color: Gray
+      - type: x
+      - type: b
+        above: 蓝 4
+        below: 打出
+      - type: x
+  - name: Bob
+    cards:
+      - type: x
+      - type: x
+        middleNote: (1)
+        below:
+          text: 新
+          color: Green
+      - type: x
+        middleNote: (1)
+        below:
+          text:
+            - 起手
+          color: Gray
+      - type: x
+      - type: x
+  - text: "收到 1 提示后："
+  - space
+  - name: Bob
+    cards:
+      - type: x
+      - type: 1
+        clue: 1
+        middleNote: 第一
+        below:
+          text: 新
+          color: Green
+      - type: 1
+        clue: 1
+        middleNote: 第二
+        below:
+          text:
+            - 起手，
+            - 打出
+      - type: x
+      - type: x

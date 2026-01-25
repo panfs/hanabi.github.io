@@ -9,6 +9,8 @@ import SimpleResult from "./example-images/simple.yml";
 
 import TextNameSource from "!raw-loader!./example-images/text-name.yml";
 import TextNameResult from "./example-images/text-name.yml";
+import OffsetNameSource from "!raw-loader!./example-images/offset-name.yml";
+import OffsetNameResult from "./example-images/offset-name.yml";
 
 import TypesSource from "!raw-loader!./example-images/types.yml";
 import TypesResult from "./example-images/types.yml";
@@ -18,6 +20,9 @@ import ClueResult from "./example-images/clue.yml";
 
 import CardTextSource from "!raw-loader!./example-images/card-text.yml";
 import CardTextResult from "./example-images/card-text.yml";
+
+import CardTextExpandSource from "!raw-loader!./example-images/card-text-expand.yml";
+import CardTextExpandResult from "./example-images/card-text-expand.yml";
 
 import TrashSource from "!raw-loader!./example-images/trash.yml";
 import TrashResult from "./example-images/trash.yml";
@@ -67,12 +72,12 @@ export const Example = ({ code, Image }) => (
 
 ## 添加新图 \{#adding-a-new-image\}
 
-1. 创建一个新的 YAML 文件。（可以基于现有的 YAML 文件进行修改。）
+1. 在想要添加新图的 Markdown 页面旁的同名子文件夹下创建一个新的 YAML 文件。（可以基于现有的 YAML 文件进行修改。）
 
-2. 在对应的 Markdown 页面中，将其作为 React 组件导入文件顶部，如下所示：
+2. 在的 Markdown 页面中，将其作为 React 组件导入文件顶部，如下所示：
 
 ```jsx
-import NewChopMove from "./new-chop-move.yml";
+import NewChopMove from "./page-name/new-chop-move.yml";
 ```
 
 3. 在 Markdown 文件的适当位置插入 React 组件：
@@ -81,13 +86,50 @@ import NewChopMove from "./new-chop-move.yml";
 <NewChopMove />
 ```
 
-参见[等级 2 的 Markdown 文件](https://raw.githubusercontent.com/hanabi/hanabi.github.io/refs/heads/main/docs/level-2.mdx)作为文档应如何包含文本和图片的基本示例。
+作为文档包含文本和图片的基本示例，可参见[等级 2 的 Markdown 文件](https://raw.githubusercontent.com/hanabi/hanabi.github.io/refs/heads/main/docs/level-2.mdx)。
 
 ## 开发 \{#development\}
 
 使用 `npm run start` 在本地查看页面时，你对网站所做的任何更改都会自动更新，无需刷新页面。这包括对 YAML 文件的更改——它们将自动重新转换为 SVG 文件并在浏览器中更新。
 
-## YAML 文件格式 \{#yml-file-format\}
+## 通用原则 \{#guidelines\}
+
+创建或修改图片时应遵守一些通用的原则，最好从复制或者修改已有图片开始。
+
+- Examples should normally use 5 stacks and 3 players. Include more only if needed.
+- Stacks can be skipped if they are not at all important to the scenario.
+- Only include card identities that are relevant to the scenario. The less details, the clearer and more general.
+  - Identify cards with the `type:` attribute.
+    - Make sure to use `border: false` if they haven't been touched by a clue.
+    - Cards that _have_ been touched by a clue are partially identified. (For example `type: 2`.)
+    - Additionally, if a note has been written, put it in the `middleNote` attribute.
+    - Use multiple `type`s sparingly, and only when relevant to the variant (i.e. rainbow/pink).
+  - Usually do not identify cards in the clue giver's or clue receiver's hand.
+    - Cards that are seen by only _some_ players should have their identities _above_ the card. (For instance: `above: Red 2`.)
+- If a clue is given, always include who gives it using the `clueGiver: true` attribute.
+  - The clue giver is usually Alice.
+  - Make sure to include all touched cards with the `clue: X` attribute.
+  - Morph touched cards like the game UI would do, using `type: X` attribute.
+  - Indicate the focus of the clue with a gold message _below_ the card. (For example `below: Play` or `below: Stall`.)
+  - Retouched cards must have `retouched: true` to make the arrow grey.
+  - Almost always indicate what the receiving player would write on the card using the `middleNote` attribute.
+    - Use shorthand notation, and include all possibilities:
+      - Fully identified: `b2`
+      - Partially identified: `b23`, `ryg2`
+      - Chop moved: `cm`. Additionally chop moved cards should have `cm: true` to draw a white border.
+      - Known trash: `kt`. Additionally, known trash should have `trash: true` to draw a trash can.
+  - Other cards whose identities are inferred from the given clue should have a black message _below_ the card. (For example `below: Finesse`.)
+    - It is not necessary to write notes on those cards, as they will usually blind play right away.
+    - _Do_ write their actual identities using `above:`, as those are known by the clue giver.
+- Illegal clues and/or misplays should clearly be marked in `red` color.
+- Mistakes or suboptimal clues should be marked in `orange` color.
+- Alternative actions (discards, plays) should be marked `below:` in cyan color.
+  - The player whose action it is should be marked with `clueGiver: true`.
+- Other information about cards should be marked `below:`.
+
+每个例子都不一样，这些是通用原则，运用你的判断力。
+
+## YAML 文件详细格式 \{#yml-file-format\}
 
 表示示例图的 YAML 文件主要分为两段：`stacks` 和 `players`。
 
@@ -104,9 +146,13 @@ import NewChopMove from "./new-chop-move.yml";
 
 玩家会自动分配以下名称：Alice、Bob、Cathy、Donald 和 Emily。可以通过 `name` 属性覆盖此设置。比如 Bob 的手牌在某事件前后需要显示两次，这可能很有用。
 
-`players` 也可以包含 `text` 而不是 `cards`。这用于描述游戏中发生的事情。
+`players` 也可以包含 `text` 或 `space` 而不是 `cards`。其中 `text` 用于描述游戏中发生的事情，而 `space` 用于增加一些垂直间距。
 
 <Example code={TextNameSource} Image={TextNameResult} />
+
+另外，`players` 也可以包含 `offset`，用来滚动玩家名称。
+
+<Example code={OffsetNameSource} Image={OffsetNameResult} />
 
 ### 手牌 \{#cards\}
 
@@ -125,7 +171,11 @@ import NewChopMove from "./new-chop-move.yml";
 
 默认情况下，被提示的牌有橙色边框，但可以通过 `border` 属性覆盖。
 
+`cm` 属性可用于在牌周围绘制白色边框。
+
 `trash` 属性可用于在牌上绘制垃圾桶图标。
+
+`fix` 属性可用于在牌上绘制扳手图标。
 
 <Example code={TypesSource} Image={TypesResult} />
 
@@ -151,12 +201,14 @@ import NewChopMove from "./new-chop-move.yml";
 `above` 和 `below` 具有相同的语法：
 
 - `above: 绿 3` 或 `above: 彩 5` 将绘制具有指定颜色和文本的框。
-- 还有一些关键字分配了特定的颜色：`焦点`、`弃牌位`。
+- 还有一些关键字分配了特定的颜色：`焦点`、`弃牌位`、`坏`、`出牌`。
 - 你可以使用 `color` 属性覆盖颜色。该属性接受 CSS 颜色，此外还支持 `rainbow` 表示彩色。
-- 你可以通过使用列表使其成为多行注释。
-- 它可以是一个此类文本框的列表，可能具有不同的颜色。
 
 <Example code={CardTextSource} Image={CardTextResult} />
+
+有些所写会展开为更长的文本：
+
+<Example code={CardTextExpandSource} Image={CardTextExpandResult} />
 
 ### 弃牌堆 \{#discard-pile\}
 

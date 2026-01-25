@@ -2,16 +2,26 @@
 title: 等级 2 挑战题
 ---
 
-import Question1 from "./level-2-question-1.yml";
-import Question2 from "./level-2-question-2.yml";
-import Question3 from "./level-2-question-3.yml";
-import Question4 from "./level-2-question-4.yml";
-import Question5 from "./level-2-question-5.yml";
-import Question6 from "./level-2-question-6.yml";
-import Question7 from "./level-2-question-7.yml";
-import Question8 from "./level-2-question-8.yml";
-import Question9 from "./level-2-question-9.yml";
-import Question10 from "./level-2-question-10.yml";
+import Question1 from "./level-2/level-2-question-1.yml";
+import Answer1 from "./level-2/level-2-answer-1.yml";
+import Question2 from "./level-2/level-2-question-2.yml";
+import Answer2 from "./level-2/level-2-answer-2.yml";
+import Question3 from "./level-2/level-2-question-3.yml";
+import Answer3 from "./level-2/level-2-answer-3.yml";
+import Question4 from "./level-2/level-2-question-4.yml";
+import Answer4 from "./level-2/level-2-answer-4.yml";
+import Question5 from "./level-2/level-2-question-5.yml";
+import Answer5 from "./level-2/level-2-answer-5.yml";
+import Question6 from "./level-2/level-2-question-6.yml";
+import Answer6 from "./level-2/level-2-answer-6.yml";
+import Question7 from "./level-2/level-2-question-7.yml";
+import Answer7 from "./level-2/level-2-answer-7.yml";
+import Question8 from "./level-2/level-2-question-8.yml";
+import Answer8 from "./level-2/level-2-answer-8.yml";
+import Question9 from "./level-2/level-2-question-9.yml";
+import Answer9 from "./level-2/level-2-answer-9.yml";
+import Question10 from "./level-2/level-2-question-10.yml";
+import Answer10 from "./level-2/level-2-answer-10.yml";
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -31,6 +41,8 @@ import TabItem from "@theme/TabItem";
 - 现在是*早期*。只剩下 1 个提示机会。
 - 列出 Alice 可以采取的所有行动。哪种行动最好？
 
+<Question1 />
+
 </TabItem>
 <TabItem value="solution1">
 
@@ -42,10 +54,10 @@ import TabItem from "@theme/TabItem";
 - Alice 的弃牌位可能是一张比绿 1 更值得保留的牌，比如黄 3 或蓝 3。
 - 因此，虽然 Alice 可以选择*留 5 提示*或弃牌，但她的最佳行动是执行*留 5 提示*，因为她的弃牌位比 Bob 的弃牌位更有价值。
 
+<Answer1 />
+
 </TabItem>
 </Tabs>
-
-<Question1 />
 
 ## 问题 2 \{#question-2\}
 
@@ -61,7 +73,9 @@ import TabItem from "@theme/TabItem";
 - Bob 在牌上写下了关于其可能性的笔记。
 
 1. Bob 会写下什么*笔记*？
-2. Bob 应该采取什么行动？
+1. Bob 应该采取什么行动？
+
+<Question2 />
 
 </TabItem>
 <TabItem value="solution2">
@@ -69,14 +83,14 @@ import TabItem from "@theme/TabItem";
 1. Bob 会写下“蓝 2、若蓝 2 被飞则为蓝 3”。
    - Bob 知道这一定是对他的蓝牌的*出牌提示*，因为它不在弃牌位。蓝 2 还没有打出在其他地方尚未被提示到，因此这张牌可能是蓝 2。
    - 然而，Bob 也看到 Cathy 的*飞牌位*上有一张蓝 2，因此 Alice 可能执行了*反向飞牌*。如果是这样，这张牌可能是蓝 3。
-2. Bob 必须考虑*反向飞牌*的可能性，所以他不能立即打出蓝牌。假设 Alice 手中没有需要提示的牌，Bob 应该选择弃牌（并避免提示蓝 2）。
+1. Bob 必须考虑*反向飞牌*的可能性，所以他不能立即打出蓝牌。假设 Alice 手中没有需要提示的牌，Bob 应该选择弃牌（并避免提示蓝 2）。
    - 如果 Cathy 在她的回合中盲打她的蓝 2，Bob 可以将笔记更新为“蓝 2、若蓝 2 被飞则为蓝 3 | 蓝 3”。
    - 如果 Cathy 没有更紧急事情而仍未在她的回合中打出蓝 2，Bob 可以将笔记更新为“蓝 2、若蓝 2 被飞则为蓝 3 | 蓝 2”。
 
+<Answer2 />
+
 </TabItem>
 </Tabs>
-
-<Question2 />
 
 ## 问题 3 \{#question-3\}
 
@@ -92,7 +106,9 @@ import TabItem from "@theme/TabItem";
 - Bob 在牌上写下了关于其可能性的笔记。
 
 1. Bob 会写下什么*笔记*？
-2. Bob 应该采取什么行动？
+1. Bob 应该采取什么行动？
+
+<Question3 />
 
 </TabItem>
 <TabItem value="solution3">
@@ -101,14 +117,14 @@ import TabItem from "@theme/TabItem";
    - Bob 知道这一定是对他的 3 的*出牌提示*，因为它不在弃牌位。由于没有 2 被打出，这张 3 不能直接打出。通常，这看起来像是对 Cathy 的绿 2 的*反向飞牌*，但由于 Bob 的 3 有绿色的否定信息，所以不可能。
    - 因此，这一定是*自我飞牌*，Bob 必然持有能让他的 3 可打出的 2。
    - Bob 在打出*飞牌位*前，无法确切知道哪张 3 是可打出的。
-2. Bob 需要立即盲打*飞牌位*，以表明他（而不是 Cathy）有相连的 2。
+1. Bob 需要立即盲打*飞牌位*，以表明他（而不是 Cathy）有相连的 2。
    - Cathy 的弃牌位是废牌，不需要留牌。
    - 在打出 2 后，Bob 应该将他的 3 标记为与打出的 2 相同的颜色。
 
+<Answer3 />
+
 </TabItem>
 </Tabs>
-
-<Question3 />
 
 ## 问题 4 \{#question-4\}
 
@@ -124,16 +140,18 @@ import TabItem from "@theme/TabItem";
 - Bob 从 4 号位弃掉了一张废牌。
 - 从 Cathy 的角度来看，Alice 的提示是*反向飞牌*吗？为什么？
 
+<Question4 />
+
 </TabItem>
 <TabItem value="solution4">
 
 - 不，这不是*反向飞牌*。
 - 由于黄 2 在弃牌位，Alice 给出的是普通的*留 2 提示*。
 
+<Answer4 />
+
 </TabItem>
 </Tabs>
-
-<Question4 />
 
 ## 问题 5 \{#question-5\}
 
@@ -149,22 +167,24 @@ import TabItem from "@theme/TabItem";
 - Bob 在牌上写下了关于其可能性的笔记。
 
 1. Bob 会写下什么*笔记*？
-2. Bob 应该采取什么行动？
+1. Bob 应该采取什么行动？
+
+<Question5 />
 
 </TabItem>
 <TabItem value="solution5">
 
 1. Bob 会写下“红 3、蓝 3、若紫 2 被飞则为紫 3”。
    - Bob 知道这一定是对他的 3 的*出牌提示*，因为它不在弃牌位。它可能是立即可打出的红 3 或蓝 3，但也可能是对紫 3 的*反向飞牌*。
-2. Bob 必须考虑*反向飞牌*的可能性。目前，Bob 需要提示 Cathy 绿色，这将是对关键绿 3 的*留关键牌提示*。
+1. Bob 必须考虑*反向飞牌*的可能性。目前，Bob 需要提示 Cathy 绿色，这将是对关键绿 3 的*留关键牌提示*。
    - 如果 Cathy 盲打紫 2，Bob 会将笔记更新为“红 3、蓝 3、若紫 2 被飞则为紫 3 | 紫 3”。
    - 如果 Cathy 没有盲打紫 2，Bob 会将笔记更新为“红 3、蓝 3、若紫 2 被飞则为紫 3 | 红 3，蓝 3”。
    - （这不可能是*自我飞牌*，因为 Bob 知道，如果可能解释为直接的*出牌提示*，就不能给出*自我飞牌*。此场景下，提示到的牌可能是立即可打出的红 3 或蓝 3。）
 
+<Answer5 />
+
 </TabItem>
 </Tabs>
-
-<Question5 />
 
 ## 问题 6 \{#question-6\}
 
@@ -180,16 +200,18 @@ import TabItem from "@theme/TabItem";
 - Bob 从 4 号位弃掉了一张废牌。
 - 从 Cathy 的角度来看，Alice 的提示是*反向飞牌*吗？为什么？
 
+<Question6 />
+
 </TabItem>
 <TabItem value="solution6">
 
 - 是的，这是*反向飞牌*。
 - 绿 4 不是关键牌，因此这个 4 提示不可能是*留牌提示*。因此，它一定是*出牌提示*。Cathy 被保证有一张绿 3 来使绿 4 可打出。
 
+<Answer6 />
+
 </TabItem>
 </Tabs>
-
-<Question6 />
 
 ## 问题 7 \{#question-7\}
 
@@ -208,6 +230,8 @@ import TabItem from "@theme/TabItem";
 1. Bob 会在每张牌上写下什么*笔记*？
 2. Bob 应该采取什么行动？
 
+<Question7 />
+
 </TabItem>
 <TabItem value="solution7">
 
@@ -219,10 +243,10 @@ import TabItem from "@theme/TabItem";
    - 这不可能是*反向飞牌*。即使 Cathy 的*飞牌位*上有一张红 2，Cathy 也会将触及弃牌位关键红 3 的提示视为*留牌提示*。因此，她不会由于 Alice 的提示盲打任何牌。
 2. 假设 Alice 手中没有有意思的牌，Bob 应该提示 Cathy 数字 2，作为对红 2 的*出牌提示*。（提示数字 2 比提示红色更好，因为它可以免费获取紫 2。）
 
+<Answer7 />
+
 </TabItem>
 </Tabs>
-
-<Question7 />
 
 ## 问题 8 \{#question-8\}
 
@@ -238,6 +262,8 @@ import TabItem from "@theme/TabItem";
 - Cathy 手中有一张未知的 2。
 - Alice 可以给出的最佳提示是什么？
 
+<Question8 />
+
 </TabItem>
 <TabItem value="solution8">
 
@@ -245,10 +271,10 @@ import TabItem from "@theme/TabItem";
 - Alice 不能提示红 3（无论用颜色还是数字）来发起*反向飞牌*，因为 Cathy 会认为这是*引牌*而非*飞牌*，并会打出未知的 2 作为红 2。
 - Alice 应避免提示 Cathy 红色，因为这会违反*良触原则*，触及废牌红 1。
 
+<Answer8 />
+
 </TabItem>
 </Tabs>
-
-<Question8 />
 
 ## 问题 9 \{#question-9\}
 
@@ -264,6 +290,8 @@ import TabItem from "@theme/TabItem";
 - Cathy 手中有一张未知的黄牌。
 - Alice 可以给出的最佳提示是什么？
 
+<Question9 />
+
 </TabItem>
 <TabItem value="solution9">
 
@@ -271,10 +299,10 @@ import TabItem from "@theme/TabItem";
 - 与上一个问题不同，*反向飞牌*会生效，因为 Cathy 知道她的黄牌无法与绿 4 相连。
 - Alice 也可以提示 Cathy 数字 3，作为对绿 3 的*出牌提示*。这也会填补黄 3 的信息。但它只会获取一张新牌，而不是两张新牌。
 
+<Answer9 />
+
 </TabItem>
 </Tabs>
-
-<Question9 />
 
 ## 问题 10 \{#question-10\}
 
@@ -290,6 +318,8 @@ import TabItem from "@theme/TabItem";
 - Cathy 手中有一张未知的紫牌。
 - Alice 可以给出的最佳提示是什么？
 
+<Question10 />
+
 </TabItem>
 <TabItem value="solution10">
 
@@ -300,7 +330,7 @@ import TabItem from "@theme/TabItem";
   - Bob 会知道数字 4 提示不可能是*反向飞牌*，因为 Cathy 的*飞牌位*上没有可打出的牌可以与 4 相连。
 - Alice 也可以提示 Bob 数字 3，作为对红 3 的*出牌提示*，但这只会“获取”一张新牌，而不是两张新牌。
 
+<Answer10 />
+
 </TabItem>
 </Tabs>
-
-<Question10 />

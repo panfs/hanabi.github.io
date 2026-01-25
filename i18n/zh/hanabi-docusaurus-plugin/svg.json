@@ -97,5 +97,17 @@
   },
   "bigText.Illegal!": {
     "message": "违规！"
+  },
+  "textExpansion.sp": {
+    "message": "留牌或\n出牌",
+    "description": "Shortcut for save or play"
+  },
+  "textExpansion.op": {
+    "message": "繁忙\n出牌",
+    "description": "Shortcut for occupied play"
+  },
+  "textExpansion.cm": {
+    "message": "弃牌位\n移动",
+    "description": "Shortcut for chop move"
   }
 }

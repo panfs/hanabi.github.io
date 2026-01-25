@@ -8,6 +8,7 @@ import type {
   Card,
   HanabiGameState,
   Player,
+  Space,
   Stack,
   Text,
   TextObject,
@@ -52,6 +53,11 @@ interface TranslatableContent {
     extraWidth: number;
     decreaseOffset: number;
   };
+  textExpansion: {
+    sp: string;
+    op: string;
+    cm: string;
+  };
 }
 
 interface LoaderOptions {
@@ -64,6 +70,7 @@ const CARD_WIDTH = 70;
 const CARD_HEIGHT = 100;
 const CARD_ROUNDED_CORNER_SIZE = 5;
 const CLUE_BORDER_COLOR = "orange";
+const CM_BORDER_COLOR = "whitesmoke";
 const CLUE_BORDER_OVERLAP = 6;
 const HORIZONTAL_SPACING_BETWEEN_CARDS = 8;
 
@@ -93,6 +100,12 @@ const WORD_TO_COLOR: ReadonlyMap<string, string> = new Map([
   // Other
   ["focus", "gold"],
   ["play", "gold"],
+  ["save", "gold"],
+  ["sp", "gold"],
+  ["op", "gold"],
+  ["tempo", "gold"],
+  ["stall", "gold"],
+  ["discard", "cyan"],
   ["chop", "darkred"],
   ["fresh", "green"],
   ["bad", "gray"],
@@ -104,6 +117,8 @@ const COLORS_WITH_BLACK_TEXT: ReadonlySet<string> = new Set([
   "yellow",
   "rainbow",
   "pink",
+  "white",
+  "cyan",
 ]);
 
 class ImageGenerator {
@@ -111,6 +126,7 @@ class ImageGenerator {
 
   private readonly piecesPath: string;
   private readonly wordToColor: ReadonlyMap<string, string>;
+  private readonly textExpansion: ReadonlyMap<string, string[]>;
 
   /** Includes suits that may not actually be present in the current variant. */
   private readonly suitAbbreviationToWord: ReadonlyMap<string, string>;
@@ -138,6 +154,11 @@ class ImageGenerator {
         ([k, v]) => [v, WORD_TO_COLOR.get(k)!] as const,
       ),
     ]);
+    this.textExpansion = new Map(
+      Object.entries(this.translations.textExpansion).map(
+        ([k, v]) => [k, v.split("\n")] as const,
+      ),
+    );
 
     const extraSuitEntries =
       hanabiGameState.suits === undefined
@@ -236,16 +257,28 @@ class ImageGenerator {
     this.leftYOffset = yOffset;
   }
 
-  private drawPlayerRows(players?: ReadonlyArray<Player | Text>) {
+  private drawPlayerRows(
+    players?: ReadonlyArray<Player | Text | Space | string>,
+  ) {
     if (players === undefined) {
       return;
     }
+    let playerNum = 0;
 
-    for (const [playerNum, playerOrText] of players.entries()) {
-      if ("text" in playerOrText) {
+    for (const playerOrText of players) {
+      if (typeof playerOrText === "string") {
+        // "space" is the only allowed literal.
+        this.drawTextSeparator("", 25);
+      } else if ("space" in playerOrText) {
+        this.drawTextSeparator("", playerOrText.space);
+      } else if ("text" in playerOrText) {
         this.drawTextSeparator(playerOrText.text);
       } else {
+        if (playerOrText.offset !== undefined) {
+          playerNum += playerOrText.offset;
+        }
         this.drawPlayer(playerNum, playerOrText);
+        playerNum++;
       }
     }
   }
@@ -254,14 +287,14 @@ class ImageGenerator {
    * Draw a text separator between a player to describe some event taking place.
    * e.g. "After discarding the 1..."
    */
-  private drawTextSeparator(text: string | null) {
+  private drawTextSeparator(text: string | null, offset = 50) {
     this.svgFile.addText(text, {
       x: this.xOffsetWherePlayerBegins + 40,
       y: this.yOffset,
       dy: 20,
       class: TEXT_COLOR_CLASS,
     });
-    this.yOffset += 50;
+    this.yOffset += offset;
   }
 
   /** Draw a row representing a player's hand. */
@@ -330,8 +363,10 @@ class ImageGenerator {
   private drawPlayerCard(card: Card) {
     const clued = !card.type.startsWith("x");
 
-    // We allow the YAML to specify "border: false" to manually disable the clue border.
-    if (card.border === true || (clued && card.border !== false)) {
+    if (card.cm === true) {
+      this.drawCmBorder();
+    } else if (card.border === true || (clued && card.border !== false)) {
+      // We allow the YAML to specify "border: false" to manually disable the clue border.
       this.drawClueBorder();
     }
 
@@ -359,6 +394,23 @@ class ImageGenerator {
       width: CARD_WIDTH + CLUE_BORDER_OVERLAP,
       height: CARD_HEIGHT + CLUE_BORDER_OVERLAP,
       fill: CLUE_BORDER_COLOR,
+      rx: CARD_ROUNDED_CORNER_SIZE,
+      ry: CARD_ROUNDED_CORNER_SIZE,
+    });
+
+    if (this.yOffset === 0) {
+      this.yTop = Math.min(this.yTop, -CLUE_BORDER_OVERLAP / 2);
+    }
+  }
+
+  private drawCmBorder() {
+    this.svgFile.addRect({
+      x: this.xOffset - CLUE_BORDER_OVERLAP / 2,
+      y: this.yOffset - CLUE_BORDER_OVERLAP / 2,
+      width: CARD_WIDTH + CLUE_BORDER_OVERLAP,
+      height: CARD_HEIGHT + CLUE_BORDER_OVERLAP,
+      fill: CM_BORDER_COLOR,
+      stroke: "black",
       rx: CARD_ROUNDED_CORNER_SIZE,
       ry: CARD_ROUNDED_CORNER_SIZE,
     });
@@ -658,6 +710,16 @@ class ImageGenerator {
       });
     }
 
+    if (card.fix === true) {
+      this.svgFile.addImage(`${this.piecesPath}/wrench.png`, {
+        x: this.xOffset + 5,
+        y: this.yOffset + 5,
+        width: CARD_WIDTH - 10,
+        height: CARD_HEIGHT - 10,
+        opacity: "0.8",
+      });
+    }
+
     const { clue } = card;
     if (clue !== undefined) {
       // Draw the arrow above the card.
@@ -772,7 +834,7 @@ class ImageGenerator {
       }
       const colorWord = this.wordToColor.get(firstWord.toLowerCase());
 
-      lines = [textOrObject];
+      lines = this.textExpansion.get(textOrObject) ?? [textOrObject];
       color = colorWord ?? defaultColor;
     } else if (typeof textOrObject.text === "string") {
       lines = [textOrObject.text];

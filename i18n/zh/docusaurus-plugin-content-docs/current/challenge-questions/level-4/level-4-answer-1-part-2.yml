@@ -1,0 +1,34 @@
+stacks:
+  - r: 1
+  - y: 0
+  - g: 1
+  - b: 5
+  - p: 0
+bigText:
+  text: 游戏早期
+players:
+  - cards:
+      - type: x
+      - type: x
+      - type: x
+      - type: x
+      - type: x
+  - cards:
+      - type: x
+      - type: x
+      - type: 1
+        below:
+          text: 新
+          color: Green
+      - type: x
+      - type: x
+  - cards:
+      - type: x
+      - type: x
+        below: 弃牌位
+      - type: x
+        cm: true
+        middleNote: cm
+        below: cm
+      - type: 2
+      - type: 2

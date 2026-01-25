@@ -2,11 +2,12 @@
 title: 等级 6 挑战题
 ---
 
-import Question1 from "./level-6-question-1.yml";
-import Question2 from "./level-6-question-2.yml";
-import Solution2 from "./level-6-question-2-part-2.yml";
-import Question3 from "./level-6-question-3.yml";
-import Solution3 from "./level-6-question-3-part-2.yml";
+import Question1 from "./level-6/level-6-question-1.yml";
+import Answer1 from "./level-6/level-6-answer-1.yml";
+import Question2 from "./level-6/level-6-question-2.yml";
+import Answer2 from "./level-6/level-6-answer-2.yml";
+import Question3 from "./level-6/level-6-question-3.yml";
+import Answer3 from "./level-6/level-6-answer-3.yml";
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -23,25 +24,27 @@ import TabItem from "@theme/TabItem";
   ]}>
 <TabItem value="question1">
 
-- Alice 手中有两张被提示过但其他信息未知的牌：3 号位的蓝牌和 4 号位的绿牌。
-- Bob 提示 Alice 数字 3，提示到 3 号位和 4 号位的两张牌。
+- Bob 手中有两张被提示过但其他信息未知的牌：3 号位的蓝牌和 4 号位的绿牌。
+- Alice 提示 Bob 数字 3，提示到 3 号位和 4 号位的两张牌。
 - 弃牌堆中已有一张蓝 4，另一张蓝 4 还未抽出。
 - 提示的含义是什么？
 - 提示的焦点是什么？
 
+<Question1 />
+
 </TabItem>
 <TabItem value="solution1">
 
-- 由于 Bob 提示时 Alice 的牌已经被“获取”，这一定是*节奏提示*。
+- 由于 Alice 提示时 Bob 的牌已经被“获取”，这一定是*节奏提示*。
 - 这个提示让两张牌在下回合变为可打出。
 - 由于最后一张蓝 4 尚未出现，目前无法通过*引牌*打出其中的蓝牌。
 - 因此，尽管这个提示不符合[_提示价值下限原则_](../beginner/minimum-clue-value-principle)，它仍然被认作“有价值的”。
 - 作为*节奏提示*，提示的焦点是最左侧的蓝 3。
 
+<Answer1 />
+
 </TabItem>
 </Tabs>
-
-<Question1 />
 
 ## 问题 2 \{#question-2\}
 
@@ -53,24 +56,24 @@ import TabItem from "@theme/TabItem";
   ]}>
 <TabItem value="question2">
 
-- Alice 手中有一张被提示过但其他信息未知的牌：4 号位的绿牌。
-- Bob 提示 Alice 数字 3，提示到 4 号位的牌，“填补”了它的信息。
-- Alice 会做什么？
+- Bob 手中有一张被提示过但其他信息未知的牌：4 号位的绿牌。
+- Alice 提示 Bob 数字 3，提示到 4 号位的牌，“填补”了它的信息。
+- Bob 在下一回合会做什么？
 
 <Question2 />
 
 </TabItem>
 <TabItem value="solution2">
 
-- 由于 Bob 提示时 Alice 的牌已经被“获取”，这一定是*节奏提示*。
+- 由于 Alice 提示时 Bob 的牌已经被“获取”，这一定是*节奏提示*。
 - 这个提示让一张牌在下回合变为可打出。
 - 因此，这个提示被认为“价值不足”；它一定有更深层的含义。
-- Alice 知道，一个无价值的*节奏提示*实际上会将弃牌位*移动*一位。
-- Alice 会采取以下行动：
-  - Alice 会在 3 号位上标记“cm”表示*已被弃牌位移过*。
-  - Alice 会在下回合打出 4 号位的绿 3。
+- Bob 知道，一个无价值的*节奏提示*实际上会将弃牌位*移动*一位。
+- Bob 会采取以下行动：
+  - Bob 会在 3 号位上标记“cm”表示*已被弃牌位移过*。
+  - Bob 会在下回合打出 4 号位的绿 3。
 
-<Solution2 />
+<Answer2 />
 
 </TabItem>
 </Tabs>
@@ -104,7 +107,7 @@ import TabItem from "@theme/TabItem";
   - 因此，在此场景中，Bob 只应该*将弃牌位移过* 4 号位。
   - Bob 在 4 号位上写下“cm”，然后继续给出无关的提示或弃掉 1 号位。
 
-<Solution3 />
+<Answer3 />
 
 </TabItem>
 </Tabs>

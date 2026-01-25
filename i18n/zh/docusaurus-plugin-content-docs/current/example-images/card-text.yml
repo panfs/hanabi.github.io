@@ -9,7 +9,7 @@ players:
       - type: r
         middleNote: (2)
       - type: x
-        middleNote: (CM)
+        middleNote: cm
         below:
           text: Bar
           color: yellow
@@ -17,6 +17,10 @@ players:
       - type: x
         above: 红 1
       - type: x
+        above:
+          text:
+            - 多
+            - 行
         below: 焦点
       - type: x
         above: 彩 4
@@ -32,5 +36,6 @@ players:
         above:
           text: Foo
           color: indigo
+        below: 坏
       - type: x
-        above: 留牌
+        above: 出牌
