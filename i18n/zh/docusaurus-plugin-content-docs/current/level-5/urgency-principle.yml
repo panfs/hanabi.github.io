@@ -5,7 +5,7 @@ stacks:
   - b: 1
   - p: 1
 bigText:
-  text: "提示机会：1"
+  text: 提示机会：1
   color: black
 players:
   - clueGiver: true

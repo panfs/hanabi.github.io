@@ -48,7 +48,7 @@ players:
           color: Gray
       - type: x
       - type: x
-  - text: "收到 1 提示后："
+  - text: 收到 1 提示后：
   - space
   - name: Bob
     cards:
